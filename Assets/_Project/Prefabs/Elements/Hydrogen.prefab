@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8232864948887227353}
   - component: {fileID: 8232864948887227350}
   - component: {fileID: -4398162538189569630}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hydrogen
   m_TagString: Untagged
   m_Icon: {fileID: 0}

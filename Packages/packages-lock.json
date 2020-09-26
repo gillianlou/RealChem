@@ -1,5 +1,21 @@
 {
   "dependencies": {
+    "com.lisandroct.core": {
+      "version": "https://github.com/lisandroct/Core.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "08f145972cf19c4b5d3c12461e9572267480c957"
+    },
+    "com.lisandroct.events": {
+      "version": "https://github.com/lisandroct/EventSystem.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.lisandroct.core": "0.0.2"
+      },
+      "hash": "ca5bf823a20c5956881bdf44a7ae2dc3e770c2bf"
+    },
     "com.unity.collab-proxy": {
       "version": "1.2.16",
       "depth": 0,
@@ -24,7 +40,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.1",
+      "version": "1.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
