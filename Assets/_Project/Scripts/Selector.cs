@@ -25,7 +25,20 @@ namespace RealChem
 
             Selected = Physics.Raycast(ray, out var hit, Distance, Mask) ? hit.collider.gameObject : null;
         }
-
+        
+        public void OnRelease()
+        {
+            if(Selected == null)
+            {
+                return;
+            }
+            var element = Selected.GetComponent<Element>();
+            if (element == null)
+            {
+                return;
+            }
+            element.Release();
+        }
         public void OnDrag(Vector3 delta)
         {
             if(Selected == null)
@@ -34,5 +47,6 @@ namespace RealChem
             }
             Selected.transform.position += delta;
         }
+
     }
 }
