@@ -125,3 +125,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   symbol: C
   _h2o: {fileID: 5456695784398616783, guid: de1f9e4334a6aa047bc2029d6351c26b, type: 3}
+  _co2: {fileID: 4600871414459180611, guid: 0824f70d56e30b84e896c30f36e83531, type: 3}
+  _c2h4: {fileID: 648826412074613327, guid: 3e8d3c3a5c121b04abe16a3ea05c25e6, type: 3}
