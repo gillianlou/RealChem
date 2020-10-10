@@ -1191,6 +1191,13 @@ MonoBehaviour:
   _avaliableElements:
   - {fileID: 11400000, guid: 1a71acc35f31c4643b9525779290ab1f, type: 2}
   - {fileID: 11400000, guid: 0da653bc24595b84998b8258d50e3ced, type: 2}
+  - {fileID: 11400000, guid: fca1128615fbff54b8446a50e68617ad, type: 2}
+  - {fileID: 11400000, guid: a14fc271d944a1d45a34f67a47cc7eb6, type: 2}
+  - {fileID: 11400000, guid: 4431a15cc4629204fb55a2541cf0e5b9, type: 2}
+  - {fileID: 11400000, guid: e1488ffd7ba533c4d9cbaa93605b3105, type: 2}
+  - {fileID: 11400000, guid: 8a8b0c406f5b70a4687fa3c4600ea980, type: 2}
+  - {fileID: 11400000, guid: bf75af68edad8c64db7c89c2ce3f930d, type: 2}
+  - {fileID: 11400000, guid: f3caadf77ea823b4b8ce2c6fd0abfa59, type: 2}
   _iconPrefab: {fileID: -9043412224752272830, guid: 0cdf9b9a50ec10040b0aed2504bc2b5e,
     type: 3}
   _content: {fileID: 317144350}
