@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace RealChem.UI
@@ -8,20 +9,49 @@ namespace RealChem.UI
     public class DrawerController : MonoBehaviour
     {
         [SerializeField]
-        private GameObject closeDrawerButton;
+        private ElementDefinition[] _avaliableElements;
+        private ElementDefinition[] AvailableElements => _avaliableElements;
+
+        [Space]
+
         [SerializeField]
-        private GameObject drawerButton;
+        private ElementIcon _iconPrefab;
+        private ElementIcon IconPrefab => _iconPrefab;
+
+        [SerializeField]
+        private RectTransform _content;
+        private RectTransform Content => _content;
+
+        [Space]
+
+        [SerializeField]
+        private GameObject _closeDrawerButton;
+        private GameObject CloseDrawerButton => _closeDrawerButton;
+
+        [SerializeField]
+        private GameObject _drawerButton;
+        private GameObject DrawerButton => _drawerButton;
         private RectTransform RectTransform => transform as RectTransform;
+
+        private void Start()
+        {
+            for(int i = 0, n = AvailableElements.Length; i <n; i++)
+            {
+                var element = AvailableElements[i];
+                var icon = Instantiate(IconPrefab, Content);
+                icon.Definition = element;
+            }
+        }
         public void Open() {
-            closeDrawerButton.SetActive(true);
+            CloseDrawerButton.SetActive(true);
             RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, 800);
-            drawerButton.SetActive(false);
+            DrawerButton.SetActive(false);
         }
 
         public void Close(){
-            closeDrawerButton.SetActive(false);
+            CloseDrawerButton.SetActive(false);
             RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, 0);
-            drawerButton.SetActive(true);
+            DrawerButton.SetActive(true);
         }
         
     }

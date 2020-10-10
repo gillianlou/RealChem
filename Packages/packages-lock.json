@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "08f145972cf19c4b5d3c12461e9572267480c957"
+      "hash": "b9c18e63258901a92d6cf4ef24b6b7fe65749dea"
     },
     "com.lisandroct.events": {
       "version": "https://github.com/lisandroct/EventSystem.git",
