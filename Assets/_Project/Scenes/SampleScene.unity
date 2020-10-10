@@ -747,6 +747,8 @@ GameObject:
   - component: {fileID: 1188190059}
   - component: {fileID: 1188190058}
   - component: {fileID: 1188190060}
+  - component: {fileID: 1188190061}
+  - component: {fileID: 1188190062}
   m_Layer: 5
   m_Name: TrashButton
   m_TagString: Untagged
@@ -812,11 +814,22 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1488654888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1188190061}
+        m_MethodName: RemoveSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1188190059
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -851,6 +864,47 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1188190061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188190056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa76f51c7ea4fa41bfcae015c2741db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onSelectionEvent: {fileID: 11400000, guid: 583f7d57e8d19264da4f159bc9da8d68, type: 2}
+  _button: {fileID: 1188190058}
+--- !u!114 &1188190062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188190056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8744003f6bebc244498bbb97fbb0928c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event: {fileID: 11400000, guid: 583f7d57e8d19264da4f159bc9da8d68, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1188190061}
+        m_MethodName: OnSelection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1285177200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,6 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f97353f1f97394ab970f2d91893ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onSelectionEvent: {fileID: 11400000, guid: 583f7d57e8d19264da4f159bc9da8d68, type: 2}
   _camera: {fileID: 1687258584}
   _mask:
     serializedVersion: 2
@@ -1827,6 +1882,8 @@ GameObject:
   - component: {fileID: 2066850217}
   - component: {fileID: 2066850216}
   - component: {fileID: 2066850218}
+  - component: {fileID: 2066850219}
+  - component: {fileID: 2066850220}
   m_Layer: 5
   m_Name: InfoButton
   m_TagString: Untagged
@@ -1892,11 +1949,22 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1849740692}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2066850219}
+        m_MethodName: OpenInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2066850217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1931,6 +1999,46 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2066850219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066850214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1130515d73ba1a44e9cc49efac132c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 2066850216}
+--- !u!114 &2066850220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066850214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8744003f6bebc244498bbb97fbb0928c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event: {fileID: 11400000, guid: 583f7d57e8d19264da4f159bc9da8d68, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2066850219}
+        m_MethodName: OnSelection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2098872454
 GameObject:
   m_ObjectHideFlags: 0

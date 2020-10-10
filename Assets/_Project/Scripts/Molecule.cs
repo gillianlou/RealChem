@@ -25,6 +25,17 @@ namespace RealChem
 
         public Element GetElement(int index) => Elements[index];
 
+        public bool IsValid()
+        {
+            for(int i = 0, n = Elements.Count; i < n; i++)
+            {
+                if(Elements[i].FreeSpots > 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public string GetSmiles()
         {
             return "HOH";

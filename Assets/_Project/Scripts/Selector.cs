@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using lisandroct.EventSystem.Events;
+using UnityEngine;
 
 namespace RealChem
 {
@@ -6,6 +7,10 @@ namespace RealChem
     public class Selector : MonoBehaviour
     {
         private const float Distance = 50;
+
+        [SerializeField]
+        private ElementEvent _onSelectionEvent;
+        private ElementEvent OnSelectionEvent => _onSelectionEvent;
 
         [SerializeField] private Camera _camera;
         private Camera Camera => _camera;
@@ -32,6 +37,8 @@ namespace RealChem
             {
                 Selected.SetSelected(true);
             }
+
+            OnSelectionEvent.Invoke(Selected);
         }
         
         public void OnRelease()
@@ -41,6 +48,8 @@ namespace RealChem
                 return;
             }
             Selected.Release();
+
+            OnSelectionEvent.Invoke(Selected);
         }
 
     }

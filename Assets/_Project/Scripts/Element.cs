@@ -24,13 +24,13 @@ namespace RealChem{
 
         public int BondedElementsCount => BondedElements.Count;
 
-        private Molecule Molecule { get; set; } = new Molecule();
+        public Molecule Molecule { get; private set; } = new Molecule();
 
         private List<Element> CollidingElements { get; } = new List<Element>();
 
         private List<Element> BondedElements { get; } = new List<Element>();
 
-        private int FreeSpots => Definition.SpotsCount - BondedElements.Count;
+        public int FreeSpots => Definition.SpotsCount - BondedElements.Count;
 
         private bool Selected { get; set; }
 
