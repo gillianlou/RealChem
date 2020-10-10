@@ -33,11 +33,11 @@ namespace RealChem
                 {
                     return 2 - ElectronsCount;
                 }
-                if (ElectronsCount <= 8)
+                if (ElectronsCount <= 10)
                 {
                     return 10 - ElectronsCount;
                 }
-                if (ElectronsCount <= 18)
+                if (ElectronsCount <= 28)
                 {
                     return 28 - ElectronsCount;
                 }

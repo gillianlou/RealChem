@@ -22,6 +22,10 @@ namespace RealChem{
             }
         }
 
+        public int BondedElementsCount => BondedElements.Count;
+
+        private Molecule Molecule { get; set; } = new Molecule();
+
         private List<Element> CollidingElements { get; } = new List<Element>();
 
         private List<Element> BondedElements { get; } = new List<Element>();
@@ -36,14 +40,16 @@ namespace RealChem{
             var material = meshRenderer.material;
 
             material.SetColor("_BaseColor", Definition.Color);
+
+            Molecule.AddElement(this);
         }
 
         public void SetSelected(bool value)
         {
             Selected = value;
-            for (int i=0, n = BondedElements.Count; i < n; i++)
+            for (int i=0, n = Molecule.Count; i < n; i++)
             {
-                BondedElements[i].Selected = value;
+                Molecule.GetElement(i).Selected = value;
 
             }
         }
@@ -79,13 +85,27 @@ namespace RealChem{
                 return false;
             }
 
+            for (int i =0, n=BondedElements.Count; i<n; i++)
+            {
+                if (BondedElements[i].BondedElements.Contains(other))
+                {
+                    return false;
+                }
+            }
+
             BondedElements.Add(other);
             other.BondedElements.Add(this);
+
+            Molecule.AddElement(other);
+            for(int i = 0, n = Molecule.Count; i < n; i++)
+            {
+                Molecule.GetElement(i).Molecule = Molecule;
+            }
 
             return true;
         }
 
-
+        public Element GetBondedElement(int index) => BondedElements[index];
 
         private void OnTriggerEnter(Collider other)
         {
