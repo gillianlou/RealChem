@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RealChem
 {
@@ -15,7 +13,7 @@ namespace RealChem
         [SerializeField] private LayerMask _mask;
         private LayerMask Mask => _mask;
 
-        private GameObject Selected { get; set; }
+        private Element Selected { get; set; }
 
 
         public void OnTap(Vector3 touchPosition)
@@ -23,7 +21,17 @@ namespace RealChem
 
             var ray = Camera.ScreenPointToRay(touchPosition);
 
-            Selected = Physics.Raycast(ray, out var hit, Distance, Mask) ? hit.collider.gameObject : null;
+            if(Selected != null)
+            {
+                Selected.SetSelected(false);
+            }
+
+            Selected = Physics.Raycast(ray, out var hit, Distance, Mask) ? hit.collider.GetComponent<Element>() : null;
+
+            if(Selected != null)
+            {
+                Selected.SetSelected(true);
+            }
         }
         
         public void OnRelease()
@@ -32,20 +40,7 @@ namespace RealChem
             {
                 return;
             }
-            var element = Selected.GetComponent<Element>();
-            if (element == null)
-            {
-                return;
-            }
-            element.Release();
-        }
-        public void OnDrag(Vector3 delta)
-        {
-            if(Selected == null)
-            {
-                return;
-            }
-            Selected.transform.position += delta;
+            Selected.Release();
         }
 
     }
