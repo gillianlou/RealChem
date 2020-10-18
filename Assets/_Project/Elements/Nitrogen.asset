@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: N
   _color: {r: 0, g: 0.11476751, b: 0.7075472, a: 1}
   _electronsCount: 7
-  _mass: 0
+  _radius: 65

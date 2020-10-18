@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: Cl
   _color: {r: 0.21288714, g: 0.9811321, b: 0.21815072, a: 1}
   _electronsCount: 17
-  _mass: 0
+  _radius: 100

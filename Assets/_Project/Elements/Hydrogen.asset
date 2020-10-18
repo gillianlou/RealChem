@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: H
   _color: {r: 0.9811321, g: 0.96262014, b: 0.96262014, a: 1}
   _electronsCount: 1
-  _mass: 1
+  _radius: 25

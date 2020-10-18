@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: C
   _color: {r: 0.4433962, g: 0.4266643, b: 0.4266643, a: 1}
   _electronsCount: 6
-  _mass: 0
+  _radius: 70

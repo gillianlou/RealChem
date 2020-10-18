@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: O
   _color: {r: 0.990566, g: 0.05606979, b: 0.05606979, a: 1}
   _electronsCount: 8
-  _mass: 0
+  _radius: 60

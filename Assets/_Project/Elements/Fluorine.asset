@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: F
   _color: {r: 0.34202564, g: 0.5754717, b: 0.35077977, a: 0.99215686}
   _electronsCount: 9
-  _mass: 0
+  _radius: 50

@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: Br
   _color: {r: 0.7075472, g: 0.2180934, b: 0.13349944, a: 1}
   _electronsCount: 35
-  _mass: 0
+  _radius: 115

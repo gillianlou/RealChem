@@ -6,6 +6,13 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
+        [SerializeField]
+        private float _radiusRatio = 0.1f;
+        private float RadiusRatio => _radiusRatio;
+
+        [SerializeField]
+        private float _yPosition = 0.1f;
+        private float YPosition => _yPosition;
 
         private ElementDefinition _definition;
         public ElementDefinition Definition
@@ -36,12 +43,24 @@ namespace RealChem{
 
         private void Start()
         {
+            ChangeSize();
+            ChangeColor();
+
+            Molecule.AddElement(this);
+        }
+
+        private void ChangeSize()
+        {
+            transform.position = new Vector3(transform.position.x, YPosition, transform.position.z);
+            transform.localScale = Vector3.one * Definition.AtomicRadius * RadiusRatio;
+        }
+
+        private void ChangeColor()
+        {
             var meshRenderer = GetComponent<MeshRenderer>();
             var material = meshRenderer.material;
 
             material.SetColor("_BaseColor", Definition.Color);
-
-            Molecule.AddElement(this);
         }
 
         public void SetSelected(bool value)

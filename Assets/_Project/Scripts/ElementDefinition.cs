@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RealChem
 {
@@ -21,9 +20,10 @@ namespace RealChem
         private int _electronsCount;
         public int ElectronsCount => _electronsCount;
 
+        [FormerlySerializedAs("_radius")]
         [SerializeField]
-        private float _mass;
-        public float Mass => _mass > 0 ? _mass : ElectronsCount * 2; //manually set mass when not close to 2xelectron#
+        private float _atomicRadius;
+        public float AtomicRadius => _atomicRadius;
 
         public int SpotsCount //number of elements need to bond to
         {

@@ -15,4 +15,4 @@ MonoBehaviour:
   _symbol: S
   _color: {r: 0.99215686, g: 0.8585798, b: 0.047058806, a: 0.99215686}
   _electronsCount: 16
-  _mass: 0
+  _radius: 100
