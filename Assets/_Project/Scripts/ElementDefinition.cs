@@ -44,5 +44,7 @@ namespace RealChem
                 return 60 - ElectronsCount;
             }
         }
+
+        public bool IsCenterElement => SpotsCount > 1;
     }
 }

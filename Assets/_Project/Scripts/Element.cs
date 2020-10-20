@@ -6,13 +6,21 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
+        [Header("Linear")]
+        [SerializeField]
+        private Transform[] _linearTransforms;
+        private Transform[] LinearTransforms => _linearTransforms;
+
+
+        [Header("Angular")]
+        [SerializeField]
+        private Transform[] _angularTransforms;
+        private Transform[] AngularTransforms => _angularTransforms;
+
+
         [SerializeField]
         private float _radiusRatio = 0.1f;
         private float RadiusRatio => _radiusRatio;
-
-        [SerializeField]
-        private float _yPosition = 0.1f;
-        private float YPosition => _yPosition;
 
         private ElementDefinition _definition;
         public ElementDefinition Definition
@@ -51,8 +59,9 @@ namespace RealChem{
 
         private void ChangeSize()
         {
-            transform.position = new Vector3(transform.position.x, YPosition, transform.position.z);
-            transform.localScale = Vector3.one * Definition.AtomicRadius * RadiusRatio;
+            var radius = Definition.AtomicRadius * RadiusRatio;
+            transform.position = new Vector3(transform.position.x, radius, transform.position.z);
+            transform.localScale = Vector3.one * radius * 2;
         }
 
         private void ChangeColor()
@@ -112,8 +121,8 @@ namespace RealChem{
                 }
             }
 
-            BondedElements.Add(other);
-            other.BondedElements.Add(this);
+            CreateBond(other);
+            other.CreateBond(this);
 
             Molecule.AddElement(other);
             for(int i = 0, n = Molecule.Count; i < n; i++)
@@ -122,6 +131,33 @@ namespace RealChem{
             }
 
             return true;
+        }
+
+        private void CreateBond(Element other)
+        {
+            BondedElements.Add(other);
+
+            if (!Definition.IsCenterElement || FreeSpots > 0)
+            {
+                return;
+            }
+            switch (Definition.SpotsCount) //full valence and bonded to more than one element
+            {
+                case 2: 
+                    var lonePairs = 2;
+
+                    if (lonePairs == 0) //angular
+                    {
+                        BondedElements[0].transform.position = AngularTransforms[0].localPosition;
+                        BondedElements[1].transform.position = AngularTransforms[1].localPosition;
+                    }
+                    else //angular
+                    {
+                        BondedElements[0].transform.position = AngularTransforms[0].localPosition;
+                        BondedElements[1].transform.position = AngularTransforms[1].localPosition;
+                    }
+                    break;
+            }
         }
 
         public Element GetBondedElement(int index) => BondedElements[index];
