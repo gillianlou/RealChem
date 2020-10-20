@@ -2,6 +2,7 @@
   "dependencies": {
     "com.lisandroct.core": "https://github.com/lisandroct/Core.git",
     "com.lisandroct.events": "https://github.com/lisandroct/EventSystem.git",
+    "com.ptc.vuforia.engine": "8.1.12",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.2",
