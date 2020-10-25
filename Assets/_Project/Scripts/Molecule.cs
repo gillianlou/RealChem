@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace RealChem
 {
@@ -38,6 +40,16 @@ namespace RealChem
         }
         public string GetSmiles()
         {
+            string smi = "";
+            for (int i = 0, n = Elements.Count; i < n; i++)
+            {
+                //smi.Concat(GameObject.getSymbol); //how to
+            }
+
+
+
+
+
             return "HOH";
         }
     }
