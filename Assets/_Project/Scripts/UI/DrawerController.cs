@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using lisandroct.EventSystem.Events;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,6 +9,12 @@ namespace RealChem.UI
 {
     public class DrawerController : MonoBehaviour
     {
+        [SerializeField]
+        private BoolEvent _onDrawer;
+        private BoolEvent OnDrawer => _onDrawer;
+
+        [Space]
+
         [SerializeField]
         private ElementDefinition[] _avaliableElements;
         private ElementDefinition[] AvailableElements => _avaliableElements;
@@ -31,6 +38,7 @@ namespace RealChem.UI
         [SerializeField]
         private GameObject _drawerButton;
         private GameObject DrawerButton => _drawerButton;
+
         private RectTransform RectTransform => transform as RectTransform;
 
         private void Start()
@@ -46,12 +54,16 @@ namespace RealChem.UI
             CloseDrawerButton.SetActive(true);
             RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, 800);
             DrawerButton.SetActive(false);
+
+            OnDrawer.Invoke(true);
         }
 
         public void Close(){
             CloseDrawerButton.SetActive(false);
             RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, 0);
             DrawerButton.SetActive(true);
+
+            OnDrawer.Invoke(false);
         }
         
     }

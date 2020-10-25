@@ -6,9 +6,6 @@ using UnityEngine.UI;
 namespace RealChem.UI{
     public class ElementIcon : MonoBehaviour
     {
-        private static readonly Vector2 Min = new Vector2(-2.25f, -1);
-        private static readonly Vector2 Max = new Vector2(2.25f, 8);
-
         [SerializeField]
         private Image _image;
         private Image Image => _image;
@@ -42,6 +39,8 @@ namespace RealChem.UI{
             }
         }
 
+        public Vector3 ScreenCenter { get; set; }
+
         private void Start()
         {
             Image.color = Definition.Color;
@@ -49,11 +48,13 @@ namespace RealChem.UI{
             Name.text = Definition.name;
         }
         public void AddElementToWorld(){
-            var x = Random.Range(Min.x, Max.x);
-            var z = Random.Range(Min.y, Max.y);
-            var position = new Vector3(x, 0.5f, z);
 
-            var element = Instantiate(Prefab, position, Quaternion.identity);
+            if(float.IsInfinity(ScreenCenter.x) || float.IsInfinity(ScreenCenter.y) || float.IsInfinity(ScreenCenter.z))
+            {
+                return;
+            }
+
+            var element = Instantiate(Prefab, ScreenCenter, Quaternion.identity);
             element.Definition = Definition;
         }
 

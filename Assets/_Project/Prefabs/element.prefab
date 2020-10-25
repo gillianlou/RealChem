@@ -286,7 +286,7 @@ MonoBehaviour:
   _angularTransforms:
   - {fileID: 2060796249963899599}
   - {fileID: 2471265218081632588}
-  _radiusRatio: 0.02
+  _radiusRatio: 0.001
 --- !u!114 &1085579361219787375
 MonoBehaviour:
   m_ObjectHideFlags: 0

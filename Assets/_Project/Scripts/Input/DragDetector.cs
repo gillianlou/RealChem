@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 namespace RealChem.Input
 {
@@ -20,13 +21,15 @@ namespace RealChem.Input
         private Camera Camera => _camera;
 
         [SerializeField]
-        private LayerMask _mask;
-        private LayerMask Mask => _mask;
+        private ARRaycastManager _raycastManager;
+        private ARRaycastManager RaycastManager => _raycastManager;
+
+        private List<ARRaycastHit> RaycastHits { get; } = new List<ARRaycastHit>();
 
         private bool Dragging { get; set; }
         private Vector3 LastPosition { get; set; }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (!Dragging)
             {
@@ -57,12 +60,16 @@ namespace RealChem.Input
         
         private bool Raycast(Vector3 screenPosition, out Vector3 planePoint)
         {
-            var ray = Camera.ScreenPointToRay(screenPosition);
+            RaycastManager.Raycast(screenPosition, RaycastHits, UnityEngine.XR.ARSubsystems.TrackableType.Planes);
 
-            var result = Physics.Raycast(ray, out var hit, Distance, Mask);
-            planePoint = hit.point;
+            if (RaycastHits.Count ==0)
+            {
+                planePoint = Vector3.zero;
+                return false;
+            }
 
-            return result;
+            planePoint = RaycastHits[0].pose.position;
+            return true;
         }
     }
 }

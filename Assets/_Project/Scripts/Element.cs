@@ -60,7 +60,7 @@ namespace RealChem{
         private void ChangeSize()
         {
             var radius = Definition.AtomicRadius * RadiusRatio;
-            transform.position = new Vector3(transform.position.x, radius, transform.position.z);
+            transform.position += Vector3.up * radius;
             transform.localScale = Vector3.one * radius * 2;
         }
 

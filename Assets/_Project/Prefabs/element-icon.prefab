@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 4097855719231408126}
   - component: {fileID: 3532118678645524943}
   - component: {fileID: -9043412224752272830}
+  - component: {fileID: 4423201642237252702}
   m_Layer: 5
   m_Name: element-icon
   m_TagString: Untagged
@@ -366,3 +367,30 @@ MonoBehaviour:
   _name: {fileID: 1545039691049528010}
   _prefab: {fileID: -4398162538189569630, guid: 2dac1afb99daa7343b199eff70f09d40,
     type: 3}
+--- !u!114 &4423201642237252702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3225229524269768435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4c478e6a6d3df4394af339a8426221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event: {fileID: 11400000, guid: 0ff1f4488c991da448b9f2caddee3d55, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9043412224752272830}
+        m_MethodName: set_ScreenCenter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
