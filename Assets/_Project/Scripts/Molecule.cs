@@ -43,14 +43,9 @@ namespace RealChem
             string smi = "";
             for (int i = 0, n = Elements.Count; i < n; i++)
             {
-                //smi.Concat(GameObject.getSymbol); //how to
+                smi.Concat(Elements[i].Definition.Symbol); 
             }
-
-
-
-
-
-            return "HOH";
+            return smi;
         }
     }
 }

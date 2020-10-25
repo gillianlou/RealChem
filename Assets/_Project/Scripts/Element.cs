@@ -25,7 +25,7 @@ namespace RealChem{
         private ElementDefinition _definition;
         public ElementDefinition Definition
         {
-            private get => _definition;
+            get => _definition;
             set
             {
                 if (_definition != null)
