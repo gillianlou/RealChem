@@ -40,12 +40,12 @@ namespace RealChem
         }
         public string GetSmiles()
         {
-            string smi = "";
+            string smiles = "";
             for (int i = 0, n = Elements.Count; i < n; i++)
             {
-                smi.Concat(Elements[i].Definition.Symbol); 
+                smiles += Elements[i].Definition.Symbol; 
             }
-            return smi;
+            return smiles;
         }
     }
 }

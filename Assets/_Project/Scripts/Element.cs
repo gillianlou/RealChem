@@ -136,7 +136,7 @@ namespace RealChem{
         private void CreateBond(Element other)
         {
             BondedElements.Add(other);
-
+            /* temp comment out bc bond placement isn't working
             if (!Definition.IsCenterElement || FreeSpots > 0)
             {
                 return;
@@ -157,7 +157,7 @@ namespace RealChem{
                         BondedElements[1].transform.position = AngularTransforms[1].localPosition;
                     }
                     break;
-            }
+            }*/
         }
 
         public Element GetBondedElement(int index) => BondedElements[index];
