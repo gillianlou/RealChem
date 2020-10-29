@@ -25,7 +25,7 @@ namespace RealChem{
         private ElementDefinition _definition;
         public ElementDefinition Definition
         {
-            private get => _definition;
+            get => _definition;
             set
             {
                 if (_definition != null)
@@ -136,7 +136,7 @@ namespace RealChem{
         private void CreateBond(Element other)
         {
             BondedElements.Add(other);
-
+            /* temp comment bc think breaking bonding
             if (!Definition.IsCenterElement || FreeSpots > 0)
             {
                 return;
@@ -157,7 +157,7 @@ namespace RealChem{
                         BondedElements[1].transform.position = AngularTransforms[1].localPosition;
                     }
                     break;
-            }
+            }*/
         }
 
         public Element GetBondedElement(int index) => BondedElements[index];
