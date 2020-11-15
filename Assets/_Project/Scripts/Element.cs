@@ -6,16 +6,22 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
-        [Header("Linear")]
         [SerializeField]
-        private Transform[] _linearTransforms;
-        private Transform[] LinearTransforms => _linearTransforms;
+        private GameObject _linear;
+        private GameObject Linear => _linear;
 
 
-        [Header("Angular")]
         [SerializeField]
-        private Transform[] _angularTransforms;
-        private Transform[] AngularTransforms => _angularTransforms;
+        private GameObject _angular;
+        private GameObject Angular => _angular;
+
+        [SerializeField]
+        private GameObject _trigonalPyramidal;
+        private GameObject TrigonalPyramidal => _trigonalPyramidal;
+
+        [SerializeField]
+        private GameObject _tetrahedral;
+        private GameObject Tetrahedral => _tetrahedral;
 
 
         [SerializeField]
@@ -36,6 +42,9 @@ namespace RealChem{
                 _definition = value;
             }
         }
+
+        private Spot[] Spots { get; } = new Spot[4];
+
 
         public int BondedElementsCount => BondedElements.Count;
 
@@ -136,14 +145,44 @@ namespace RealChem{
         private void CreateBond(Element other)
         {
             BondedElements.Add(other);
-            /* temp comment bc think breaking bonding
+            /*count the number of valence electrons in the structure, subtract the number of valence 
+             * electrons involved in a bonded atom, eight for all bonded atoms, according to the octet rule, 
+             * except for H, which requires two. If there are remaining valence electrons, they must be lone 
+             * pairs (LPs) around the central atom, so the remaining electrons are divided by two to come up 
+             * with the number of lone pairs. Now determine what the structure is by finding the structure in 
+             * the VSEPR table that has the correct number of bonding atoms and lone pairs.
+             * 8-2*each bonded element/2 = # lone pairs
+             * If the steric number is 4, it is sp3
+             * If the steric number is 3 – sp2
+             * If the steric number is 2 – sp*/
+
+            var lonePairs = (8 - 2*BondedElementsCount)/2;
+            var stericNumber = BondedElementsCount + lonePairs;
+
             if (!Definition.IsCenterElement || FreeSpots > 0)
             {
                 return;
             }
+
+            if(stericNumber == 2)
+            {
+                //sp 180
+            }
+
+            else if(stericNumber == 3)
+            {
+                //sp2 120
+            }
+
+            else if(stericNumber == 4)
+            {
+                //sp3 109.5
+            }
+            /*
             switch (Definition.SpotsCount) //full valence and bonded to more than one element
             {
                 case 2: 
+                    var stericNumber;
                     var lonePairs = 2;
 
                     if (lonePairs == 0) //angular
