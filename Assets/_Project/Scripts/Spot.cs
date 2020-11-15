@@ -9,22 +9,45 @@ namespace RealChem
     {
         [SerializeField]
         private MeshRenderer _meshRenderer;
-        private MeshRenderer MeshRenderer => _meshRenderer;
 
-        private Element Element { get; set; }
+        [SerializeField]
+        private Element _element;
+        public Element Element => _element;
+        private MeshRenderer MeshRenderer => _meshRenderer;
 
         private Spot BondedSpot { get; set; }
 
-        private Element BondedElement => BondedSpot != null ? BondedSpot.Element : null;
+        public Element BondedElement => BondedSpot != null ? BondedSpot.Element : null;
+
+        public Vector3 Position => transform.position;
+
+        public Vector3 ElementPosition => Element.transform.position;
 
         private void Awake()
         {
-            SetRenderer(false);
+            //SetRenderer(false);
+        }
+
+        public void Initialize()
+        {
+            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         }
 
         private void SetRenderer(bool active)
         {
             MeshRenderer.enabled = active;
+        }
+
+        public void Bond(Spot spot)
+        {
+            if (BondedSpot != null) return;
+            if (spot.BondedSpot != null) return;
+
+            BondedSpot = spot;
+            gameObject.SetActive(false);
+
+            spot.BondedSpot = this;
+            spot.gameObject.SetActive(false);
         }
     }
 }

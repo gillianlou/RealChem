@@ -18,11 +18,6 @@ namespace RealChem
             }
             Elements.Add(element);
             Set.Add(element);
-
-            for(int i = 0, n = element.BondedElementsCount; i<n; i++)
-            {
-                AddElement(element.GetBondedElement(i));
-            }
         }
 
         public Element GetElement(int index) => Elements[index];
@@ -31,7 +26,7 @@ namespace RealChem
         {
             for(int i = 0, n = Elements.Count; i < n; i++)
             {
-                if(Elements[i].FreeSpots > 0)
+                if(Elements[i].IsFull())
                 {
                     return false;
                 }

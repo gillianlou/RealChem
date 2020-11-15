@@ -7,21 +7,21 @@ namespace RealChem{
     public class Element : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _linear;
-        private GameObject Linear => _linear;
+        private Transform _linear;
+        private Transform Linear => _linear;
 
 
         [SerializeField]
-        private GameObject _angular;
-        private GameObject Angular => _angular;
+        private Transform _angular;
+        private Transform Angular => _angular;
 
         [SerializeField]
-        private GameObject _trigonalPyramidal;
-        private GameObject TrigonalPyramidal => _trigonalPyramidal;
+        private Transform _trigonalPyramidal;
+        private Transform TrigonalPyramidal => _trigonalPyramidal;
 
         [SerializeField]
-        private GameObject _tetrahedral;
-        private GameObject Tetrahedral => _tetrahedral;
+        private Transform _tetrahedral;
+        private Transform Tetrahedral => _tetrahedral;
 
 
         [SerializeField]
@@ -46,15 +46,10 @@ namespace RealChem{
         private Spot[] Spots { get; } = new Spot[4];
 
 
-        public int BondedElementsCount => BondedElements.Count;
-
         public Molecule Molecule { get; private set; } = new Molecule();
 
-        private List<Element> CollidingElements { get; } = new List<Element>();
+        private List<Spot> CollidingSpots { get; } = new List<Spot>();
 
-        private List<Element> BondedElements { get; } = new List<Element>();
-
-        public int FreeSpots => Definition.SpotsCount - BondedElements.Count;
 
         private bool Selected { get; set; }
 
@@ -62,6 +57,8 @@ namespace RealChem{
         {
             ChangeSize();
             ChangeColor();
+
+            InitializeSpots();
 
             Molecule.AddElement(this);
         }
@@ -81,6 +78,48 @@ namespace RealChem{
             material.SetColor("_BaseColor", Definition.Color);
         }
 
+        private void InitializeSpots()
+        {
+            Debug.Log(Definition.SpotsCount);
+            Transform geometry;
+            switch (Definition.SpotsCount)
+            {
+                case 1:
+                    geometry = Linear;
+                    break;
+                case 2:
+                    geometry = Angular;
+                    break;
+                case 3:
+                    geometry = TrigonalPyramidal;
+                    break;
+                case 4:
+                    geometry = Tetrahedral;
+                    break;
+                default:
+                    throw new UnityException("Geometry not defined");
+            }
+
+            for(int i = 0, n = geometry.childCount; i < n; i++)
+            {
+                var child = geometry.GetChild(i);
+                var spot = child.GetComponent<Spot>();
+                Spots[i] = spot;
+            }
+
+            for (int i = 0, n = Spots.Length; i < n; i++)
+            {
+                var spot = Spots[i];
+                if (spot == null) continue;
+                spot.Initialize();
+                spot.transform.SetParent(transform, true);
+            }
+            Destroy(Linear.gameObject);
+            Destroy(Angular.gameObject);
+            Destroy(TrigonalPyramidal.gameObject);
+            Destroy(Tetrahedral.gameObject);
+        }
+
         public void SetSelected(bool value)
         {
             Selected = value;
@@ -93,58 +132,42 @@ namespace RealChem{
 
         public void Release()
         {
-            if(FreeSpots<= 0)
+            if(Spots[0].BondedElement != null)
             {
                 return;
             }
-            for(int i=0, n=CollidingElements.Count; i<n; i++)
+
+            if(CollidingSpots.Count <= 0)
             {
-                var other = CollidingElements[i];
-                if (Bond(other))
-                {
-                    if (FreeSpots <= 0)
-                    {
-                        break;
-                    }
-                }
+                return;
             }
 
+            var spot = CollidingSpots[0];
+            spot.Bond(Spots[0]);
+
+            transform.position = spot.Position;
+            transform.LookAt(spot.ElementPosition, Vector3.up);
+
+            Molecule = spot.Element.Molecule;
+
+            Molecule.AddElement(this);
         }
-        private bool Bond(Element other)
+
+        public bool IsFull()
         {
-            if(FreeSpots<= 0 || other.FreeSpots <= 0) //no free spots
+            for (int i = 0, n = Spots.Length; i < n; i++)
             {
-                return false;
-            }
-
-            if (BondedElements.Contains(other)) //already connected
-            {
-                return false;
-            }
-
-            for (int i =0, n=BondedElements.Count; i<n; i++)
-            {
-                if (BondedElements[i].BondedElements.Contains(other))
+                var spot = Spots[i];
+                if (spot == null) continue;
+                if (spot.BondedElement == null)
                 {
                     return false;
                 }
             }
-
-            CreateBond(other);
-            other.CreateBond(this);
-
-            Molecule.AddElement(other);
-            for(int i = 0, n = Molecule.Count; i < n; i++)
-            {
-                Molecule.GetElement(i).Molecule = Molecule;
-            }
-
             return true;
         }
+        
 
-        private void CreateBond(Element other)
-        {
-            BondedElements.Add(other);
             /*count the number of valence electrons in the structure, subtract the number of valence 
              * electrons involved in a bonded atom, eight for all bonded atoms, according to the octet rule, 
              * except for H, which requires two. If there are remaining valence electrons, they must be lone 
@@ -156,71 +179,29 @@ namespace RealChem{
              * If the steric number is 3 – sp2
              * If the steric number is 2 – sp*/
 
-            var lonePairs = (8 - 2*BondedElementsCount)/2;
-            var stericNumber = BondedElementsCount + lonePairs;
-
-            if (!Definition.IsCenterElement || FreeSpots > 0)
-            {
-                return;
-            }
-
-            if(stericNumber == 2)
-            {
-                //sp 180
-            }
-
-            else if(stericNumber == 3)
-            {
-                //sp2 120
-            }
-
-            else if(stericNumber == 4)
-            {
-                //sp3 109.5
-            }
-            /*
-            switch (Definition.SpotsCount) //full valence and bonded to more than one element
-            {
-                case 2: 
-                    var stericNumber;
-                    var lonePairs = 2;
-
-                    if (lonePairs == 0) //angular
-                    {
-                        BondedElements[0].transform.position = AngularTransforms[0].localPosition;
-                        BondedElements[1].transform.position = AngularTransforms[1].localPosition;
-                    }
-                    else //angular
-                    {
-                        BondedElements[0].transform.position = AngularTransforms[0].localPosition;
-                        BondedElements[1].transform.position = AngularTransforms[1].localPosition;
-                    }
-                    break;
-            }*/
-        }
-
-        public Element GetBondedElement(int index) => BondedElements[index];
+            /*var lonePairs = (8 - 2*BondedElementsCount)/2;
+            var stericNumber = BondedElementsCount + lonePairs;*/
 
         private void OnTriggerEnter(Collider other)
         {
-            var otherElement = other.GetComponent<Element>();
+            var otherElement = other.GetComponent<Spot>();
             if (otherElement == null)
             {
                 return;
             }
 
-            CollidingElements.Add(otherElement);
+            CollidingSpots.Add(otherElement);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            var otherElement = other.GetComponent<Element>();
+            var otherElement = other.GetComponent<Spot>();
             if (otherElement == null)
             {
                 return;
             }
 
-            CollidingElements.Remove(otherElement);
+            CollidingSpots.Remove(otherElement);
         }
 
         public void OnDrag(Vector3 delta)
