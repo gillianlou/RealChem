@@ -18,7 +18,7 @@ namespace RealChem
 
         [SerializeField]
         private int _electronsCount;
-        public int ElectronsCount => _electronsCount;
+        private int ElectronsCount => _electronsCount;
 
         [FormerlySerializedAs("_radius")]
         [SerializeField]
@@ -39,9 +39,9 @@ namespace RealChem
                 }
                 if (ElectronsCount <= 28)
                 {
-                    return 28 - ElectronsCount;
+                    return 8 - (ElectronsCount - 10);
                 }
-                return 60 - ElectronsCount;
+                return 36 - ElectronsCount;
             }
         }
 

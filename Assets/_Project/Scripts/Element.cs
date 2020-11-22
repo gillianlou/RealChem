@@ -6,6 +6,8 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
+        private const float RadiusRatio = 0.02f;
+
         [SerializeField]
         private Transform _linear;
         private Transform Linear => _linear;
@@ -22,11 +24,6 @@ namespace RealChem{
         [SerializeField]
         private Transform _tetrahedral;
         private Transform Tetrahedral => _tetrahedral;
-
-
-        [SerializeField]
-        private float _radiusRatio = 0.1f;
-        private float RadiusRatio => _radiusRatio;
 
         private ElementDefinition _definition;
         public ElementDefinition Definition
@@ -53,6 +50,10 @@ namespace RealChem{
 
         private bool Selected { get; set; }
 
+        public Vector3 Position => transform.position;
+
+        private float Radius => Definition.AtomicRadius * RadiusRatio;
+
         private void Start()
         {
             ChangeSize();
@@ -65,9 +66,8 @@ namespace RealChem{
 
         private void ChangeSize()
         {
-            var radius = Definition.AtomicRadius * RadiusRatio;
-            transform.position = new Vector3(transform.position.x, radius, transform.position.z);
-            transform.localScale = Vector3.one * radius * 2;
+            transform.position = new Vector3(transform.position.x, Radius, transform.position.z);
+            transform.localScale = Vector3.one * Radius * 2;
         }
 
         private void ChangeColor()
@@ -120,6 +120,19 @@ namespace RealChem{
             Destroy(Tetrahedral.gameObject);
         }
 
+        private bool IsFree()
+        {
+            for(int i = 0, n = Spots.Length; i < n; i++)
+            {
+                var spot = Spots[i];
+                if (spot != null && Spots[i].BondedElement != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public void SetSelected(bool value)
         {
             Selected = value;
@@ -132,24 +145,32 @@ namespace RealChem{
 
         public void Release()
         {
-            if(Spots[0].BondedElement != null)
-            {
-                return;
-            }
-
             if(CollidingSpots.Count <= 0)
             {
                 return;
             }
 
-            var spot = CollidingSpots[0];
-            spot.Bond(Spots[0]);
+            if (!IsFree())
+            {
+                return;
+            }
 
-            transform.position = spot.Position;
-            transform.LookAt(spot.ElementPosition, Vector3.up);
+            var collidingSpot = CollidingSpots[0];
+            var collidingElement = collidingSpot.Element;
 
-            Molecule = spot.Element.Molecule;
+            var collidingSpotPosition = collidingSpot.Position;
+            var collidingElementPosition = collidingElement.Position;
+            var direction = (collidingSpotPosition - collidingElementPosition).normalized;
+            var distance = (collidingElement.Radius + Radius) * 0.8f;
+            var position = collidingElementPosition + direction * distance;
 
+
+            transform.position = position;
+            transform.LookAt(collidingSpot.ElementPosition, Vector3.up);
+
+            collidingSpot.Bond(Spots[0]);
+
+            Molecule = collidingSpot.Element.Molecule;
             Molecule.AddElement(this);
         }
 
