@@ -18,7 +18,7 @@ namespace RealChem.Input
 
         private bool WasTouching { get; set; }
 
-        public void FixedUpdate()
+        public void Update()
         {
             var touching = BaseInput.IsTouching();
 

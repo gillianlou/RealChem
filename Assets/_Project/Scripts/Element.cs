@@ -233,5 +233,14 @@ namespace RealChem{
             }
             transform.position += delta;
         }
+
+        public void OnVerticalPan(float delta)
+        {
+            if (!Selected)
+            {
+                return;
+            }
+            transform.position += Vector3.up * delta;
+        }
     }
 }
