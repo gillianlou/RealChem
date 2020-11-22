@@ -1289,6 +1289,7 @@ GameObject:
   - component: {fileID: -4398162538189569630}
   - component: {fileID: 1085579361219787375}
   - component: {fileID: -2451459385766452243}
+  - component: {fileID: 5299064703961749070}
   m_Layer: 8
   m_Name: element
   m_TagString: Untagged
@@ -1451,6 +1452,33 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -4398162538189569630}
         m_MethodName: OnVerticalPan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5299064703961749070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232864948887227351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eeede336acc9e048ab34d444953e7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event: {fileID: 11400000, guid: 9544eab0c6e60ce47955a012b7f70cb1, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4398162538189569630}
+        m_MethodName: OnRotation
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

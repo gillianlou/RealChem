@@ -242,5 +242,15 @@ namespace RealChem{
             }
             transform.position += Vector3.up * delta;
         }
+
+        public void OnRotation(float delta)
+        {
+            if (!Selected)
+            {
+                return;
+            }
+
+            transform.rotation *= Quaternion.Euler(Vector3.up * delta);
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace RealChem.Input
 
 
         }
-        public static Vector3 GetTouchPosition(int index = 0) 
+        public static Vector2 GetTouchPosition(int index = 0) 
         {
 #if UNITY_EDITOR
             if(index == 0)
@@ -41,7 +41,12 @@ namespace RealChem.Input
 
             if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
             {
-                return UnityEngine.Input.mousePosition;
+                var mousePosition = (Vector2)UnityEngine.Input.mousePosition;
+                var screenCenter = new Vector2(Screen.width, Screen.height) * 0.5f;
+
+                var direction = mousePosition - screenCenter;
+
+                return screenCenter - direction;
             }
             throw new UnityException("Only one or two fingers allowed");
 
