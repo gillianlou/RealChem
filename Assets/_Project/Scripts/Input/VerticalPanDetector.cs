@@ -27,7 +27,10 @@ namespace RealChem.Input
         private float _ratio = 0.2f;
         private float Ratio => _ratio;
 
+        private bool Valid { get; set; }
+
         private bool Panning { get; set; }
+        private bool Rotating { get; set; }
         private float LastPosition { get; set; }
 
         private bool WasTouching { get; set; }
@@ -44,13 +47,15 @@ namespace RealChem.Input
 
                 if (!Panning)
                 {
+                    var delta = Mathf.Abs(position - LastPosition);
+
                     if (!WasTouching)
                     {
+                        Valid = delta < Threshold;
                         LastPosition = position;
                     }
 
-                    var delta = position - LastPosition;
-                    if(Mathf.Abs(delta) >= Threshold)
+                    if(Valid && !Rotating && delta >= Threshold)
                     {
                         LastPosition = position;
                         Panning = true;
@@ -74,5 +79,7 @@ namespace RealChem.Input
 
             WasTouching = touching;
         }
+        public void OnRotation(float delta) => Rotating = true;
+        public void OnRotationEnd() => Rotating = false;
     }
 }

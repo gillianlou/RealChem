@@ -24,6 +24,8 @@ namespace RealChem.Input
         private float Threshold => _threshold;
 
 
+        private bool Panning { get; set; }
+
         private bool Rotating { get; set; }
         private float LastAngle { get; set; }
 
@@ -47,7 +49,7 @@ namespace RealChem.Input
                     }
 
                     var delta = angle - LastAngle;
-                    if(Mathf.Abs(delta) >= Threshold)
+                    if(!Panning && Mathf.Abs(delta) >= Threshold)
                     {
                         LastAngle = angle;
                         Rotating = true;
@@ -71,6 +73,9 @@ namespace RealChem.Input
 
             WasTouching = touching;
         }
+
+        public void OnPanning(float delta) => Panning = true;
+        public void OnPanningEnd() => Panning = false;
 
         private static float CalculateAngle(Vector2 a, Vector2 b)
         {
