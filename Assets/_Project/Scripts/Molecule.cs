@@ -44,5 +44,7 @@ namespace RealChem
             //Debug.Log(smiles);
             return smiles;
         }
+
+        public Transform GetParent() => Elements[0].transform;
     }
 }

@@ -41,21 +41,21 @@ namespace RealChem.Input
 
             if (touching)
             {
-                var touch0Position = BaseInput.GetTouchPosition(0);
-                var touch1Position = BaseInput.GetTouchPosition(1);
-                var position = (touch0Position.y + touch1Position.y) * 0.5f;
+                var touch0Position = BaseInput.GetTouchPosition(0).y;
+                var touch1Position = BaseInput.GetTouchPosition(1).y;
+                var position = (touch0Position + touch1Position) * 0.5f;
 
                 if (!Panning)
                 {
-                    var delta = Mathf.Abs(position - LastPosition);
-
                     if (!WasTouching)
                     {
-                        Valid = delta < Threshold;
+                        Valid = Mathf.Abs(touch0Position - touch1Position) < Threshold;
                         LastPosition = position;
                     }
 
-                    if(Valid && !Rotating && delta >= Threshold)
+                    var delta = Mathf.Abs(position - LastPosition);
+
+                    if (Valid && !Rotating && delta >= Threshold)
                     {
                         LastPosition = position;
                         Panning = true;

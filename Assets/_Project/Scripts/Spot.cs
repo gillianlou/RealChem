@@ -23,19 +23,23 @@ namespace RealChem
 
         public Vector3 ElementPosition => Element.transform.position;
 
-        private void Awake()
-        {
-            //SetRenderer(false);
-        }
-
         public void Initialize()
         {
-            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            transform.SetParent(Element.transform, true);
+
+            SetRenderer(false);
+            Highlight(false);
         }
 
-        private void SetRenderer(bool active)
+        public void SetRenderer(bool active)
         {
             MeshRenderer.enabled = active;
+        }
+
+        public void Highlight(bool highlight)
+        {
+            var multiplier = highlight ? 1.2f : 1;
+            transform.localScale = Vector3.one / (Element.Radius * 2 * multiplier);
         }
 
         public void Bond(Spot spot)

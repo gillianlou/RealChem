@@ -7,6 +7,8 @@ namespace RealChem{
     public class Element : MonoBehaviour
     {
         private const float RadiusRatio = 0.02f;
+        private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
+        private static readonly int SelectedProperty = Shader.PropertyToID("_Selected");
 
         [SerializeField]
         private Transform _linear;
@@ -40,6 +42,8 @@ namespace RealChem{
             }
         }
 
+        private Material Material { get; set; }
+
         private Spot[] Spots { get; } = new Spot[4];
 
 
@@ -52,10 +56,12 @@ namespace RealChem{
 
         public Vector3 Position => transform.position;
 
-        private float Radius => Definition.AtomicRadius * RadiusRatio;
+        public float Radius => Definition.AtomicRadius * RadiusRatio;
 
         private void Start()
         {
+            Material = GetComponent<MeshRenderer>().material;
+
             ChangeSize();
             ChangeColor();
 
@@ -72,10 +78,7 @@ namespace RealChem{
 
         private void ChangeColor()
         {
-            var meshRenderer = GetComponent<MeshRenderer>();
-            var material = meshRenderer.material;
-
-            material.SetColor("_BaseColor", Definition.Color);
+            Material.SetColor(BaseColorProperty, Definition.Color);
         }
 
         private void InitializeSpots()
@@ -112,7 +115,6 @@ namespace RealChem{
                 var spot = Spots[i];
                 if (spot == null) continue;
                 spot.Initialize();
-                spot.transform.SetParent(transform, true);
             }
             Destroy(Linear.gameObject);
             Destroy(Angular.gameObject);
@@ -136,11 +138,8 @@ namespace RealChem{
         public void SetSelected(bool value)
         {
             Selected = value;
-            for (int i=0, n = Molecule.Count; i < n; i++)
-            {
-                Molecule.GetElement(i).Selected = value;
 
-            }
+            Material.SetInt(SelectedProperty, value ? 1 : 0);
         }
 
         public void Release()
@@ -169,6 +168,8 @@ namespace RealChem{
             transform.LookAt(collidingSpot.ElementPosition, Vector3.up);
 
             collidingSpot.Bond(Spots[0]);
+
+            transform.SetParent(collidingElement.transform, true);
 
             Molecule = collidingSpot.Element.Molecule;
             Molecule.AddElement(this);
@@ -205,24 +206,39 @@ namespace RealChem{
 
         private void OnTriggerEnter(Collider other)
         {
-            var otherElement = other.GetComponent<Spot>();
-            if (otherElement == null)
+            var spot = other.GetComponent<Spot>();
+            if (spot == null)
             {
                 return;
             }
 
-            CollidingSpots.Add(otherElement);
+            CollidingSpots.Add(spot);
+            if (Selected)
+            {
+                spot.SetRenderer(true);
+                spot.Highlight(CollidingSpots.Count == 1);
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            var otherElement = other.GetComponent<Spot>();
-            if (otherElement == null)
+            var spot = other.GetComponent<Spot>();
+            if (spot == null)
             {
                 return;
             }
 
-            CollidingSpots.Remove(otherElement);
+            CollidingSpots.Remove(spot);
+            if (Selected)
+            {
+                spot.SetRenderer(false);
+                spot.Highlight(false);
+
+                if(CollidingSpots.Count > 0)
+                {
+                    CollidingSpots[0].Highlight(true);
+                }
+            }
         }
 
         public void OnDrag(Vector3 delta)
@@ -231,7 +247,9 @@ namespace RealChem{
             {
                 return;
             }
-            transform.position += delta;
+            var parent = Molecule.GetParent();
+
+            parent.position += delta;
         }
 
         public void OnVerticalPan(float delta)
@@ -240,7 +258,9 @@ namespace RealChem{
             {
                 return;
             }
-            transform.position += Vector3.up * delta;
+            var parent = Molecule.GetParent();
+
+            parent.position += Vector3.up * delta;
         }
 
         public void OnRotation(float delta)
@@ -250,7 +270,9 @@ namespace RealChem{
                 return;
             }
 
-            transform.rotation *= Quaternion.Euler(Vector3.up * delta);
+            var parent = Molecule.GetParent();
+
+            parent.RotateAround(transform.position, Vector3.up, delta);
         }
     }
 }
