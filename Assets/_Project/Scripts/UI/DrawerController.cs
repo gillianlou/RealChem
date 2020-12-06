@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//DrawerController.cs implements the functionality for the drawer that appears in the app when you click the up arrow. This script allows you to create 
+//new elements within the Uniity editor, setting their colors and symbols
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;

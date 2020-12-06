@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Spot.cs defines the placement indicators that appear when two elments with available bonding spots collide
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

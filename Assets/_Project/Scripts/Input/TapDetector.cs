@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Detects taps and their position on screen
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using lisandroct.EventSystem.Events;

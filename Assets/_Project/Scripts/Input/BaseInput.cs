@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//BaseInput keeps track of user inputs to the app (mouse clicks or screen taps)
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace RealChem.Input

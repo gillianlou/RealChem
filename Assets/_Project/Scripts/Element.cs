@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//Element.cs defines elements with fields for color, size, number of available bonding spots, and bond angles, as well as methods to move
+//elements around (ie rotate, drag vertical, drag horizontal)
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;

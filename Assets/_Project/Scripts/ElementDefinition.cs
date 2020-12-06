@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//ElementDefinition.cs 'defines' each element created in unity: it's symbol, color, electron count, atomic radius, and the number of free spots available to bond
+
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace RealChem

@@ -1,4 +1,6 @@
-﻿using lisandroct.EventSystem.Events;
+﻿//RotationDetector.cs implements rotational movement capabilities for objects within the app
+
+using lisandroct.EventSystem.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,4 +1,6 @@
-﻿using lisandroct.EventSystem.Events;
+﻿//VerticalPanDetector.cs implements vertical movement capabilities for objects within the app
+
+using lisandroct.EventSystem.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
