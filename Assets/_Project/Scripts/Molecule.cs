@@ -41,9 +41,7 @@ namespace RealChem
             for (int i = 0, n = Elements.Count; i < n; i++)
             {
                 smiles += Elements[i].Definition.Symbol;
-                //Debug.Log(smiles);
             }
-            //Debug.Log(smiles);
             return smiles;
         }
 
