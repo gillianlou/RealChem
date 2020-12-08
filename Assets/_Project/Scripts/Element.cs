@@ -9,7 +9,7 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
-        private const float RadiusRatio = 0.02f;
+        private const float RadiusRatio = 0.002f;
         private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
         private static readonly int SelectedProperty = Shader.PropertyToID("_Selected");
 
