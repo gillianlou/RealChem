@@ -1,4 +1,6 @@
-﻿using lisandroct.EventSystem.Events;
+﻿//DragDetector.cs implements horizontal (planar) movement capabilities for objects within the app
+
+using lisandroct.EventSystem.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

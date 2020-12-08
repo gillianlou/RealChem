@@ -1,4 +1,6 @@
-﻿using lisandroct.EventSystem.Events;
+﻿//allows tapped game objects to be 'selected'
+
+using lisandroct.EventSystem.Events;
 using UnityEngine;
 
 namespace RealChem

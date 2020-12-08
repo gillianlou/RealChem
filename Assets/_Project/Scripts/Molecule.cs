@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+//Molecule.cs implements the bonding of individual elements, storing bonded elements in a list. This is how molecules are created
+
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RealChem
@@ -18,11 +19,6 @@ namespace RealChem
             }
             Elements.Add(element);
             Set.Add(element);
-
-            for(int i = 0, n = element.BondedElementsCount; i<n; i++)
-            {
-                AddElement(element.GetBondedElement(i));
-            }
         }
 
         public Element GetElement(int index) => Elements[index];
@@ -31,7 +27,7 @@ namespace RealChem
         {
             for(int i = 0, n = Elements.Count; i < n; i++)
             {
-                if(Elements[i].FreeSpots > 0)
+                if(Elements[i].IsFull())
                 {
                     return false;
                 }
@@ -43,9 +39,11 @@ namespace RealChem
             string smiles = "";
             for (int i = 0, n = Elements.Count; i < n; i++)
             {
-                smiles += Elements[i].Definition.Symbol; 
+                smiles += Elements[i].Definition.Symbol;
             }
             return smiles;
         }
+
+        public Transform GetParent() => Elements[0].transform;
     }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//ElementDefinition.cs 'defines' each element created in unity: it's symbol, color, electron count, atomic radius, and the number of free spots available to bond
+
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace RealChem
@@ -18,7 +20,7 @@ namespace RealChem
 
         [SerializeField]
         private int _electronsCount;
-        public int ElectronsCount => _electronsCount;
+        private int ElectronsCount => _electronsCount;
 
         [FormerlySerializedAs("_radius")]
         [SerializeField]
@@ -39,9 +41,9 @@ namespace RealChem
                 }
                 if (ElectronsCount <= 28)
                 {
-                    return 28 - ElectronsCount;
+                    return 8 - (ElectronsCount - 10);
                 }
-                return 60 - ElectronsCount;
+                return 36 - ElectronsCount;
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//Detects taps and their position on screen
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using lisandroct.EventSystem.Events;
@@ -18,7 +20,7 @@ namespace RealChem.Input
 
         private bool WasTouching { get; set; }
 
-        public void FixedUpdate()
+        public void Update()
         {
             var touching = BaseInput.IsTouching();
 
