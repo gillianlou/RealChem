@@ -8,6 +8,15 @@ namespace RealChem.Input
 {
     public class PlacementDetector : MonoBehaviour
     {
+        #if UNITY_EDITOR
+        [Header("Editor")]
+        [SerializeField]
+        private Transform _plane;
+        private Transform Plane => _plane;
+        #endif
+
+        [Header("App")]
+
         [SerializeField]
         private Vector3Event _onScreenCenter;
         private Vector3Event OnScreenCenter => _onScreenCenter;
@@ -39,13 +48,16 @@ namespace RealChem.Input
 
         private void Update()
         {
+            #if UNITY_EDITOR
+            OnScreenCenter.Invoke(new Vector3(0, Plane.position.y, 10));
+            #else
             var screenCenter = Camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
 
-            //move placement indicator 
-            if(Raycast(screenCenter, out var planePoint, out var planeRotation))
+            if (Raycast(screenCenter, out var planePoint, out var planeRotation))
             {
                 PlacementIndicator.SetActive(true);
                 PlacementIndicator.transform.SetPositionAndRotation(planePoint, planeRotation);
+                
                 OnScreenCenter.Invoke(planePoint);
             }
             else
@@ -53,6 +65,8 @@ namespace RealChem.Input
                 PlacementIndicator.SetActive(false);
                 OnScreenCenter.Invoke(Vector3.negativeInfinity);
             }
+            #endif
+
         }
 
         private bool Raycast(Vector3 screenPosition, out Vector3 planePoint, out Quaternion planeRotation)

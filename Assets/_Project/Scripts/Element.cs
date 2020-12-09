@@ -9,7 +9,12 @@ using UnityEngine;
 namespace RealChem{
     public class Element : MonoBehaviour
     {
+        #if UNITY_EDITOR
+        private const float RadiusRatio = 0.02f;
+        #else
         private const float RadiusRatio = 0.002f;
+        #endif
+
         private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
         private static readonly int SelectedProperty = Shader.PropertyToID("_Selected");
 

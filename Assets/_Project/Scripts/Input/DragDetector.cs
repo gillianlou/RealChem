@@ -11,6 +11,23 @@ namespace RealChem.Input
     public class DragDetector : MonoBehaviour
     {
 
+        #if UNITY_EDITOR
+        private const float Distance = 50;
+
+        [Header("Editor")]
+
+        [SerializeField]
+        private Camera _camera;
+        private Camera Camera => _camera;
+
+        [SerializeField]
+        private LayerMask _mask;
+        private LayerMask Mask => _mask;
+        #endif
+
+        [Header("App")]
+
+
         [SerializeField]
         private Vector3Event _onDragEvent;
         private Vector3Event OnDragEvent => _onDragEvent;
@@ -25,6 +42,26 @@ namespace RealChem.Input
 
         private bool Dragging { get; set; }
         private Vector3 LastPosition { get; set; }
+
+        #if UNITY_EDITOR
+        private void FixedUpdate()
+        {
+            if (!Dragging)
+            {
+                return;
+            }
+
+            if (Raycast(BaseInput.GetTouchPosition(), out var planePosition))
+            {
+                var delta = planePosition - LastPosition;
+
+                OnDragEvent.Invoke(delta);
+
+                LastPosition = planePosition;
+            }
+        }
+        #else
+
 
         private void Update()
         {
@@ -43,6 +80,8 @@ namespace RealChem.Input
             }
         }
 
+        #endif
+
         public void OnTap(Vector3 touchPosition)
         {
             Dragging = Raycast(touchPosition, out var planePosition);
@@ -57,9 +96,17 @@ namespace RealChem.Input
         
         private bool Raycast(Vector3 screenPosition, out Vector3 planePoint)
         {
-            RaycastManager.Raycast(screenPosition, RaycastHits, UnityEngine.XR.ARSubsystems.TrackableType.Planes);
+            #if UNITY_EDITOR
+            var ray = Camera.ScreenPointToRay(screenPosition);
 
-            if (RaycastHits.Count ==0)
+            var result = Physics.Raycast(ray, out var hit, Distance, Mask);
+            planePoint = hit.point;
+
+            return result;
+            #else
+            RaycastManager.Raycast(screenPosition, RaycastHits, TrackableType.Planes);
+
+            if (RaycastHits.Count == 0)
             {
                 planePoint = Vector3.zero;
                 return false;
@@ -67,6 +114,8 @@ namespace RealChem.Input
 
             planePoint = RaycastHits[0].pose.position;
             return true;
+            #endif
+
         }
     }
 }
