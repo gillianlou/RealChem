@@ -11,56 +11,17 @@ namespace RealChem.Input
     public class DragDetector : MonoBehaviour
     {
 
-        #if UNITY_EDITOR
-        private const float Distance = 50;
-
-        [Header("Editor")]
-
         [SerializeField]
         private Camera _camera;
         private Camera Camera => _camera;
 
         [SerializeField]
-        private LayerMask _mask;
-        private LayerMask Mask => _mask;
-        #endif
-
-        [Header("App")]
-
-
-        [SerializeField]
         private Vector3Event _onDragEvent;
         private Vector3Event OnDragEvent => _onDragEvent;
 
-        [Space]
-
-        [SerializeField]
-        private ARRaycastManager _raycastManager;
-        private ARRaycastManager RaycastManager => _raycastManager;
-
-        private List<ARRaycastHit> RaycastHits { get; } = new List<ARRaycastHit>();
-
+        private Element Selected { get; set; }
         private bool Dragging { get; set; }
         private Vector3 LastPosition { get; set; }
-
-        #if UNITY_EDITOR
-        private void FixedUpdate()
-        {
-            if (!Dragging)
-            {
-                return;
-            }
-
-            if (Raycast(BaseInput.GetTouchPosition(), out var planePosition))
-            {
-                var delta = planePosition - LastPosition;
-
-                OnDragEvent.Invoke(delta);
-
-                LastPosition = planePosition;
-            }
-        }
-        #else
 
 
         private void Update()
@@ -74,19 +35,31 @@ namespace RealChem.Input
             {
                 var delta = planePosition - LastPosition;
 
+                if(Mathf.Approximately(delta.x, 0) && Mathf.Approximately(delta.y, 0) && Mathf.Approximately(delta.z, 0))
+                {
+                    return;
+                }
+
                 OnDragEvent.Invoke(delta);
 
                 LastPosition = planePosition;
             }
         }
 
-        #endif
+
+        public void OnSelection(Element element)
+        {
+                Selected = element;
+        }
 
         public void OnTap(Vector3 touchPosition)
         {
-            Dragging = Raycast(touchPosition, out var planePosition);
+            if (Selected != null)
+            {
+                Dragging = Raycast(touchPosition, out var planePosition);
 
-            LastPosition = planePosition;
+                LastPosition = planePosition;
+            }
         }
 
         public void OnRelease()
@@ -96,26 +69,16 @@ namespace RealChem.Input
         
         private bool Raycast(Vector3 screenPosition, out Vector3 planePoint)
         {
-            #if UNITY_EDITOR
             var ray = Camera.ScreenPointToRay(screenPosition);
-
-            var result = Physics.Raycast(ray, out var hit, Distance, Mask);
-            planePoint = hit.point;
-
-            return result;
-            #else
-            RaycastManager.Raycast(screenPosition, RaycastHits, TrackableType.Planes);
-
-            if (RaycastHits.Count == 0)
-            {
-                planePoint = Vector3.zero;
-                return false;
+            var plane = new Plane(Vector3.up, Selected.transform.position);
+            
+            if (plane.Raycast(ray, out var t)){
+                planePoint = ray.GetPoint(t);
+                return true;
             }
 
-            planePoint = RaycastHits[0].pose.position;
-            return true;
-            #endif
-
+            planePoint = Vector3.zero;
+            return false;
         }
     }
 }
