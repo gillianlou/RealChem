@@ -12,6 +12,8 @@ namespace RealChem
         private HashSet<Element> Set {get;} = new HashSet<Element>();
         private List<Element> Elements { get; } = new List<Element>();
 
+        private Element Selected { get; set; }
+
         public void AddElement(Element element)
         {
             if (Set.Contains(element))
@@ -28,16 +30,18 @@ namespace RealChem
         {
             for(int i = 0, n = Elements.Count; i < n; i++)
             {
-                if(Elements[i].IsFull())
+                if(!Elements[i].IsFull())
                 {
                     return false;
                 }
             }
             return true;
         }
+        
         public string GetSmiles()
         {
             string smiles = "";
+
             for (int i = 0, n = Elements.Count; i < n; i++)
             {
                 smiles += Elements[i].Definition.Symbol;
