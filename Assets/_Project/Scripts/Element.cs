@@ -80,7 +80,7 @@ namespace RealChem{
 
         private void ChangeSize()
         {
-            transform.position = new Vector3(transform.position.x, Radius, transform.position.z);
+            transform.position += Vector3.up * Radius;
             transform.localScale = Vector3.one * Radius * 2;
         }
 
