@@ -10,17 +10,12 @@ namespace RealChem.Input
 {
     public class DragDetector : MonoBehaviour
     {
-        private const float Distance = 50;
 
         [SerializeField]
         private Vector3Event _onDragEvent;
         private Vector3Event OnDragEvent => _onDragEvent;
 
         [Space]
-
-        [SerializeField]
-        private Camera _camera;
-        private Camera Camera => _camera;
 
         [SerializeField]
         private ARRaycastManager _raycastManager;
