@@ -15,8 +15,8 @@ namespace RealChem.Input
         private FloatEvent OnRotationEvent => _onRotationEvent;
 
         [SerializeField]
-        private Event _onRotationEndEvent;
-        private Event OnRotationEndEvent => _onRotationEndEvent;
+        private Event _onReleaseEvent;
+        private Event OnReleaseEvent => _onReleaseEvent;
 
         [Space]
 
@@ -70,13 +70,13 @@ namespace RealChem.Input
             if (!touching && Rotating)
             {
                 Rotating = false;
-                OnRotationEndEvent.Invoke();
+                OnReleaseEvent.Invoke();
             }
 
             WasTouching = touching;
         }
 
-        public void OnPanning(float delta) => Panning = true;
+        public void OnPanningStart() => Panning = true;
         public void OnPanningEnd() => Panning = false;
 
         private static float CalculateAngle(Vector2 a, Vector2 b)

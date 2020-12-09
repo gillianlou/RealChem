@@ -4,19 +4,20 @@ using lisandroct.EventSystem.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Event = lisandroct.EventSystem.Event;
 
 namespace RealChem.Input
 {
     public class VerticalPanDetector : MonoBehaviour
     {
-        [SerializeField]
-        private FloatEvent _onVerticalPanEvent;
-        private FloatEvent OnVerticalPanEvent => _onVerticalPanEvent;
+        [FormerlySerializedAs("_onVerticalPanEvent")] [SerializeField]
+        private Vector3Event _onDragEvent;
+        private Vector3Event OnDragEvent => _onDragEvent;
 
         [SerializeField]
-        private Event _onVerticalPanEndEvent;
-        private Event OnVerticalPanEndEvent => _onVerticalPanEndEvent;
+        private Event _onReleaseEvent;
+        private Event OnReleaseEvent => _onReleaseEvent;
 
         [Space]
 
@@ -66,7 +67,7 @@ namespace RealChem.Input
                 if (Panning)
                 {
                     var delta = position - LastPosition;
-                    OnVerticalPanEvent.Invoke(delta * Ratio);
+                    OnDragEvent.Invoke(Vector3.up * (delta * Ratio));
 
                     LastPosition = position;
                 }
@@ -76,7 +77,7 @@ namespace RealChem.Input
             if (!touching && Panning)
             {
                 Panning = false;
-                OnVerticalPanEndEvent.Invoke();
+                OnReleaseEvent.Invoke();
             }
 
             WasTouching = touching;

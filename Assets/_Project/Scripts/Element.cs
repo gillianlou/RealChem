@@ -261,17 +261,6 @@ namespace RealChem{
             parent.position += delta;
         }
 
-        public void OnVerticalPan(float delta)
-        {
-            if (!Selected)
-            {
-                return;
-            }
-            var parent = Molecule.GetParent();
-
-            parent.position += Vector3.up * delta;
-        }
-
         public void OnRotation(float delta)
         {
             if (!Selected)
