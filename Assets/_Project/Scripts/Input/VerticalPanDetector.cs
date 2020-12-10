@@ -32,8 +32,6 @@ namespace RealChem.Input
         private float _threshold;
         private float Threshold => _threshold;
 
-        private bool Valid { get; set; }
-
         private bool Panning { get; set; }
         private bool Rotating { get; set; }
         private float LastPosition { get; set; }
@@ -54,13 +52,12 @@ namespace RealChem.Input
                 {
                     if (!WasTouching)
                     {
-                        Valid = Mathf.Abs(touch0Position - touch1Position) < Threshold;
                         LastPosition = position;
                     }
 
                     var delta = Mathf.Abs(position - LastPosition);
 
-                    if (Valid && !Rotating && delta >= Threshold)
+                    if (!Rotating && delta >= Threshold)
                     {
                         LastPosition = position;
                         Panning = true;
