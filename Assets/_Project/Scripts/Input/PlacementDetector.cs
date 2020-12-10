@@ -39,10 +39,11 @@ namespace RealChem.Input
 
         private void Update()
         {
-            #if UNITY_EDITOR
-            OnScreenCenter.Invoke(new Vector3(0, -5, 10));
+#if UNITY_EDITOR
+            var screenCenter = Camera.ViewportToWorldPoint(new Vector3(0.5f, 0.65f, 30));
+            OnScreenCenter.Invoke(screenCenter);
             #else
-            var screenCenter = Camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+            var screenCenter = Camera.ViewportToScreenPoint(new Vector3(0.5f, 0.65f));
 
             if (Raycast(screenCenter, out var planePoint, out var planeRotation))
             {
