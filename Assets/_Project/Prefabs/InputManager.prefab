@@ -57,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _OnTapEvent: {fileID: 11400000, guid: 64569a7d9ee9fa640baa119b590cbe76, type: 2}
   _OnReleaseEvent: {fileID: 11400000, guid: 79f5d0ee5cd1a7f4aad21b65158e1874, type: 2}
+  _delay: 0.1
 --- !u!114 &1705540454652236745
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,15 @@ namespace RealChem.Input
         private Event _OnReleaseEvent;
         private Event OnReleaseEvent => _OnReleaseEvent;
 
+        [Space]
+
+        [SerializeField]
+        private float _delay = 0.5f;
+        private float Delay => _delay;
+
+
         private bool WasTouching { get; set; }
+        private bool Tapping { get; set; }
 
         public void Update()
         {
@@ -26,20 +34,28 @@ namespace RealChem.Input
 
             if (touching && !WasTouching)
             {
-                OnTapEvent.Invoke(BaseInput.GetTouchPosition());
+                StartCoroutine(StartTap());
             }
 
-            if (!touching && WasTouching)
+            if (!touching && Tapping)
             {
+                Tapping = false;
                 OnReleaseEvent.Invoke();
             }
-
             WasTouching = touching;
+        }
+
+        private IEnumerator StartTap()
+        {
+            yield return new WaitForSeconds(Delay);
+
+            var touching = BaseInput.IsTouching();
+            if (touching)
+            {
+                Tapping = true;
+                OnTapEvent.Invoke(BaseInput.GetTouchPosition());
+            }
         }
 
     }
 }
-
-
-
-
