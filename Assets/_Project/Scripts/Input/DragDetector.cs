@@ -26,7 +26,7 @@ namespace RealChem.Input
 
         private void Update()
         {
-            if (!Dragging)
+            if (!Dragging || Selected == null)
             {
                 return;
             }
@@ -49,7 +49,9 @@ namespace RealChem.Input
 
         public void OnSelection(Element element)
         {
-                Selected = element;
+            Selected = element;
+
+            OnTap(BaseInput.GetTouchPosition());
         }
 
         public void OnTap(Vector3 touchPosition)

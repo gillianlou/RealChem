@@ -11,6 +11,12 @@ namespace RealChem.Input
 {
     public class VerticalPanDetector : MonoBehaviour
     {
+
+#if UNITY_EDITOR
+        private const float Ratio = 0.01f;
+#else
+        private const float Ratio = 0.001f;
+#endif
         [FormerlySerializedAs("_onVerticalPanEvent")] [SerializeField]
         private Vector3Event _onDragEvent;
         private Vector3Event OnDragEvent => _onDragEvent;
@@ -25,10 +31,6 @@ namespace RealChem.Input
         //required distance before start panning 
         private float _threshold;
         private float Threshold => _threshold;
-
-        [SerializeField]
-        private float _ratio = 0.2f;
-        private float Ratio => _ratio;
 
         private bool Valid { get; set; }
 

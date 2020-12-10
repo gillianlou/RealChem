@@ -32,7 +32,7 @@ namespace RealChem
             {
                 Selected.SetSelected(false);
             }
-
+            var prev = Selected;
             Selected = Physics.Raycast(ray, out var hit, Distance, Mask) ? hit.collider.GetComponent<Element>() : null;
 
             if(Selected != null)
@@ -40,7 +40,10 @@ namespace RealChem
                 Selected.SetSelected(true);
             }
 
-            OnSelectionEvent.Invoke(Selected);
+            if (prev != Selected)
+            {
+                OnSelectionEvent.Invoke(Selected);
+            }
         }
         
         public void OnRelease()
@@ -50,8 +53,6 @@ namespace RealChem
                 return;
             }
             Selected.Release();
-
-            OnSelectionEvent.Invoke(Selected);
         }
 
     }
