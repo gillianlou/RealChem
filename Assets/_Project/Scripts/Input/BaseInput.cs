@@ -24,7 +24,7 @@ namespace RealChem.Input
                 : UnityEngine.Input.touchCount == 1;
 
 #endif
-            return touching && !EventSystem.current.IsPointerOverGameObject();
+            return touching && !EventSystem.current.IsPointerOverGameObject() && !EventSystem.current.IsPointerOverGameObject(0) && !EventSystem.current.IsPointerOverGameObject(1);
 
 
         }
