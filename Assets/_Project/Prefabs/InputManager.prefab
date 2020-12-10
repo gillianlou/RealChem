@@ -57,7 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _OnTapEvent: {fileID: 11400000, guid: 64569a7d9ee9fa640baa119b590cbe76, type: 2}
   _OnReleaseEvent: {fileID: 11400000, guid: 79f5d0ee5cd1a7f4aad21b65158e1874, type: 2}
-  _delay: 0.1
+  _delay: 0.05
 --- !u!114 &1705540454652236745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onDragEvent: {fileID: 11400000, guid: c24c0cba852f17f4b94dc3ade4d225cd, type: 2}
   _onReleaseEvent: {fileID: 11400000, guid: 79f5d0ee5cd1a7f4aad21b65158e1874, type: 2}
-  _threshold: 25
+  _threshold: 10
   _ratio: 0.05
 --- !u!114 &1705540454652236750
 MonoBehaviour:
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onRotationEvent: {fileID: 11400000, guid: 9544eab0c6e60ce47955a012b7f70cb1, type: 2}
   _onReleaseEvent: {fileID: 11400000, guid: 79f5d0ee5cd1a7f4aad21b65158e1874, type: 2}
-  _threshold: 5
+  _threshold: 20
 --- !u!114 &8078353329423662379
 MonoBehaviour:
   m_ObjectHideFlags: 0
