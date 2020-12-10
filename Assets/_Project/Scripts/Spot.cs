@@ -9,6 +9,8 @@ namespace RealChem
 {
     public class Spot : MonoBehaviour
     {
+        private const float AtomicRadius = 20;
+
         [SerializeField]
         private MeshRenderer _meshRenderer;
 
@@ -41,7 +43,8 @@ namespace RealChem
         public void Highlight(bool highlight)
         {
             var multiplier = highlight ? 1.2f : 1;
-            transform.localScale = Vector3.one / (Element.Radius * 2 * multiplier);
+            var one = Vector3.one * multiplier;
+            transform.localScale = one * (AtomicRadius / Element.Definition.AtomicRadius);
         }
 
         public void Bond(Spot spot)

@@ -64,7 +64,7 @@ namespace RealChem{
 
         public Vector3 Position => transform.position;
 
-        public float Radius => Definition.AtomicRadius * RadiusRatio;
+        private float Radius => Definition.AtomicRadius * RadiusRatio;
 
         private void Start()
         {
